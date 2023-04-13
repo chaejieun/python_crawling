@@ -23,7 +23,7 @@ for article in articles:
         if "entertain" in response.url :
             title = soup.select_one(".end_tit")
             content = soup.select_one("#articeBody")
-        elif "sports" :
+        elif "sports" in response.url: 
             title = soup.select_one("h4.title")
             content = soup.select_one("#newsEndContents")
             # 본문 내용 안에 불필요한 div , p 삭제(compose)

@@ -2,10 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import pyautogui
+import pyperclip
 
 # 사용자 입력
 keyword = pyautogui.prompt("검색어를 입력하세요")
 lastpage = int(pyautogui.prompt("몇 페이지까지 크롤링 할까요?"))
+
+# 본문 전체 내용
+total_content = ""
+
+# 기사 개수
+article_num = 0
 
 page_num = 1
 for i in range (1, lastpage * 10, 10) :
@@ -26,10 +33,8 @@ for i in range (1, lastpage * 10, 10) :
 
             # 만약 연예 뉴스 라면
             if "entertain" in response.url :
-                title = soup.select_one(".end_tit")
                 content = soup.select_one("#articeBody")
             elif "sports" in response.url: 
-                title = soup.select_one("h4.title")
                 content = soup.select_one("#newsEndContents")
                 # 본문 내용 안에 불필요한 div , p 삭제(compose)
                 # divs = content.select("div")     
@@ -39,11 +44,14 @@ for i in range (1, lastpage * 10, 10) :
                 # for p in paragraphs:
                 #     p.decompose()    
             else :
-                title = soup.select_one("#title_area")
                 content = soup.select_one("#contents")
             
-            print("=========== 링크 ===========\n", url)
-            print("=========== 제목 ===========\n", title.text.strip())
             print("=========== 본문 ===========\n", content.text.strip())
+            total_content += content.text.strip()
+            article_num = article_num + 1
             time.sleep(0.3) # 프로그램을 0.3초 잠시 멈추게 함
     page_num = page_num + 1
+
+print(f"{article_num}개 기사 크롤링 완료!!!")
+pyperclip.copy(total_content) # 클립보드에 복사하는 명령어
+pyautogui.alert("클립보드에 복사되었습니다.")
