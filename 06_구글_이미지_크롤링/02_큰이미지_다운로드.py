@@ -39,11 +39,18 @@ imgs = browser.find_elements(By.CSS_SELECTOR, "img.rg_i.Q4LuWd")
 
 for i, img in enumerate(imgs, 1):
     # 이미지를 클릭해서 큰 사이를 찾음
-    img.click()
+    # 클릭하다보면 element click intercepted 에러 발생
+    # javascript로 클릭을 직접 하도록 만들어주면 됨 
+    browser.execute_script("arguments[0].click();",img)
+    #img.click()
     time.sleep(1)
 
     # 큰 이미지 주소 추출
-    target = browser.find_element(By.CSS_SELECTOR, "img.n3VNCb")
+    if i == 1:
+        target = browser.find_elements(By.CSS_SELECTOR, "img.r48jcc.pT0Scc")[0]
+    else:
+        target = browser.find_element(By.CSS_SELECTOR, "img.r48jcc.pT0Scc")[1]
+
     img_src = target.get_attribute('src')
 
     # 이미지 다운로드
