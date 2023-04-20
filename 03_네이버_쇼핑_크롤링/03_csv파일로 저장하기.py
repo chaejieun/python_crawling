@@ -5,7 +5,7 @@ import time
 import csv
 
 # 브라우저 생성
-browser = webdriver.Chrome('C:/Users/chaejieun/  chromedriver.exe')
+browser = webdriver.Chrome('C:/Users/chaejieun/chromedriver.exe')
 
 # 웹사이트 열기
 browser.get('https://www.naver.com')

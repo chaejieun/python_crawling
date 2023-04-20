@@ -47,9 +47,9 @@ for i, img in enumerate(imgs, 1):
 
     # 큰 이미지 주소 추출
     if i == 1:
-        target = browser.find_elements(By.CSS_SELECTOR, "img.r48jcc.pT0Scc")[0]
+        target = browser.find_elements(By.CSS_SELECTOR, "img.r48jcc.pT0Scc.iPVvYb")[0]
     else:
-        target = browser.find_element(By.CSS_SELECTOR, "img.r48jcc.pT0Scc")[1]
+        target = browser.find_elements(By.CSS_SELECTOR, "img.r48jcc.pT0Scc.iPVvYb")[1]
 
     img_src = target.get_attribute('src')
 
@@ -58,4 +58,7 @@ for i, img in enumerate(imgs, 1):
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent','Mozila/5.0')]
     urllib.request.install_opener(opener)
-    urllib.request.urlretrieve(img_src, f'06_구글_이미지_크롤링/{keyword}/{i}.jpg')
+    try:
+        urllib.request.urlretrieve(img_src, f'06_구글_이미지_크롤링/{keyword}/{i}.jpg')
+    except:
+        pass
