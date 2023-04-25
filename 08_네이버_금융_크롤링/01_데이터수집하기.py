@@ -15,4 +15,13 @@ for tr in trs:
     roe = tr.select_one('td:nth-child(8)').text
     pbr = tr.select_one('td:nth-child(9)').text
     reserve_ratio = tr.select_one('td:nth-child(10)').text  
-    print(name, per, roe, pbr, reserve_ratio)
+   
+
+    # 데이터 전처리
+    # 'N/A' 값이 아닐 경우 에만
+    if per != 'N/A' and roe != 'N/A' and pbr != 'N/A' and reserve_ratio != 'N/A' :
+        per = float(per.replace(',',''))
+        roe = float(roe.replace(',',''))
+        pbr = float(per.replace(',',''))
+        reserve_ratio = float(per.replace(',',''))
+        print(name, per, roe, pbr, reserve_ratio)
