@@ -30,8 +30,29 @@ browser.switch_to.frame("searchIframe")
 
 # browser.switch_to_default_content() iframe 밖으로 나오기
 
-# 가게 이름 10개 가져오기
-names = browser.find_elements(By.CSS_SELECTOR, 'span.place_bluelink.TYaxT')
-for name in names:
-    print(name.text)
 
+# iframe 안쪽을 한번 클릭하기
+browser.find_element(By.CSS_SELECTOR, "#_pcmap_list_scroll_container").click()
+
+# 로딩된 데이터 개수 가져오기
+lis = browser.find_elements(By.CSS_SELECTOR, "li.UEzoS")
+before_len = len(lis)
+
+while True:
+    # 맨 아래로 스크롤 내린다.
+    browser.find_element(By.CSS_SELECTOR, "body").send_keys(Keys.END)
+
+    # 스크롤 사이 페이지 로딩 시간
+    time.sleep(1.5)
+
+    # 스크롤 후 로딩된 데이터 개수 확인
+    lis = browser.find_elements(By.CSS_SELECTOR, "li.UEzoS")
+    after_len = len(lis)
+
+
+    print("스크롤 전", before_len, "스크롤 후 ", after_len)
+
+    # 로딩된 데이터 개수가 같다면 반복 멈춤
+    if before_len == after_len:
+        break
+    before_len = after_len
